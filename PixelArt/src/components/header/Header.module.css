@@ -1,0 +1,28 @@
+.header {
+  height: 80px;
+  width: 100%;
+  border-bottom: var(--border);
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--w-max-container);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 70px;
+  margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 2.6rem;
+}

@@ -1,7 +1,17 @@
+import { Header } from "./components/header/Header";
 import "./App.css";
 
-function App() {
-  return <></>;
+export default function App() {
+  return <AppLayout header={<Header />}>Hello World!</AppLayout>;
 }
 
-export default App;
+function AppLayout({header, children}) {
+  return (
+    <>
+      {header}
+      <main className="main">
+        {children}
+      </main>
+    </>
+  )
+}
