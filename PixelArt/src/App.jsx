@@ -1,17 +1,21 @@
 import { Header } from "./components/header/Header";
+import { ArtBoard } from "./components/art-board/ArtBoard";
 import "./App.css";
 
 export default function App() {
-  return <AppLayout header={<Header />}>Hello World!</AppLayout>;
+
+  return (
+    <AppLayout header={<Header />}>
+      <ArtBoard />
+    </AppLayout>
+  );
 }
 
-function AppLayout({header, children}) {
+function AppLayout({ header, children }) {
   return (
     <>
       {header}
-      <main className="main">
-        {children}
-      </main>
+      <main className="main">{children}</main>
     </>
-  )
+  );
 }

@@ -1,0 +1,13 @@
+.cell {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+}
+
+.even {
+  background-color: #fff;
+}
+
+.odd {
+  background-color: #ddd;
+}
