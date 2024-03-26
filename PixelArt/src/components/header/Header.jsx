@@ -9,7 +9,7 @@ export function Header() {
           <img src={logoSrc} alt="Logo" />
           <h1>PixelART</h1>
         </div>
-        <button className="btn">Login</button>
+        <button className={cl.btn}>Login</button>
       </div>
     </header>
   );

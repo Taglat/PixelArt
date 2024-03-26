@@ -26,3 +26,12 @@
 .logo h1 {
     font-size: 2.6rem;
 }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #333;
+}

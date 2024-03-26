@@ -8,6 +8,7 @@ import { ArtBoardLayout } from "./ui/ArtBoardLayout";
 import { Cell } from "./ui/Cell";
 import { ToolsIcons } from "./constants";
 import { Tool } from "./ui/Tool";
+import { StoryButtons } from "./ui/StoryButtons";
 
 export function ArtBoard() {
   const [artBoardState, dispatch] = useReducer(
@@ -29,6 +30,28 @@ export function ArtBoard() {
 
   return (
     <ArtBoardLayout
+      topbar={
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-betweenn",
+            alignItems: "center",
+          }}
+        >
+          <StoryButtons
+            prevHistory={() =>
+              dispatch({
+                type: ART_BOARD_STATE_ACTIONS.UNDO,
+              })
+            }
+            nextHistory={() =>
+              dispatch({
+                type: ART_BOARD_STATE_ACTIONS.REDO,
+              })
+            }
+          />
+        </div>
+      }
       grid={
         <div style={gridStyle}>
           {cells.map((cell, index) => (
