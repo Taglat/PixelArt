@@ -1,5 +1,10 @@
 import cl from "./ZArtBoardLayout.module.css";
 
-export function ArtBoardLayout({ grid }) {
-  return <div className={cl.container}>{grid}</div>;
+export function ArtBoardLayout({ grid, tools }) {
+  return (
+    <div className={cl.container}>
+      {grid}
+      {tools}
+    </div>
+  );
 }

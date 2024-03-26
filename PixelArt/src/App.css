@@ -10,3 +10,8 @@ body {
   padding: 10px 20px;
   border-radius: 20px;
 }
+
+.tool {
+  padding: 10px;
+  border: 1px solid #000;
+}

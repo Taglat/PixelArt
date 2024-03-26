@@ -1,7 +1,7 @@
 import cl from "./ZCell.module.css";
 
 const getColor = (color, isOdd) => {
-  if (!color) {
+  if (color === null) {
     return isOdd ? "#dddddd" : "#ffffff";
   } else {
     return color;
