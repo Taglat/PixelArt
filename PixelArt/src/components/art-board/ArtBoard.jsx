@@ -22,6 +22,7 @@ export function ArtBoard() {
   const { cells, size } = artBoardState;
   console.log(cells);
   console.log(size);
+  console.log(artBoardState.tool);
   const gridStyle = {
     display: "grid",
     gridTemplateColumns: `repeat(${size}, 1fr)`,
@@ -83,6 +84,7 @@ export function ArtBoard() {
                 tool: tool.name,
               });
             }}
+            selected={artBoardState.tool == tool.name }
           />
         );
       })}
