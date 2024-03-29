@@ -13,8 +13,11 @@ export const initArtBoardState = ({ size }) => ({
     height: size.height,
   },
   cells: new Array(size.width * size.height).fill(null),
-  history: [],
-  future: [],
+  history: {
+    cells: [],
+    size: [],
+  },
+  future: { cells: [], size: [] },
 });
 
 export const artBoardReducer = (state, action) => {
@@ -35,8 +38,11 @@ export const artBoardReducer = (state, action) => {
 
       return {
         ...newState,
-        history: [...state.history, state.cells],
-        future: [],
+        history: {
+          cells: [...state.history.cells, state.cells],
+          size: [...state.history.size],
+        },
+        future: { cells: [], size: [] },
       };
     }
     case ART_BOARD_STATE_ACTIONS.TOOL_CHANGE: {
@@ -46,24 +52,36 @@ export const artBoardReducer = (state, action) => {
       };
     }
     case ART_BOARD_STATE_ACTIONS.UNDO: {
-      if (state.history.length === 0) {
+      if (state.history.cells.length === 0) {
         return state;
       }
 
-      let history = [...state.history];
-      let future = [...state.future, state.cells];
-      let cells = history.pop();
+      let history = {
+        cells: [...state.history.cells],
+        size: [...state.history.size],
+      };
+      let future = {
+        cells: [...state.future.cells, state.cells],
+        size: [...state.future.size],
+      };
+      let cells = history.cells.pop();
 
       return { ...state, cells, history, future };
     }
     case ART_BOARD_STATE_ACTIONS.REDO: {
-      if (state.future.length === 0) {
+      if (state.future.cells.length === 0) {
         return state;
       }
 
-      let future = [...state.future];
-      let history = [...state.history, state.cells];
-      let cells = future.pop();
+      let future = {
+        cells: [...state.future.cells],
+        size: [...state.future.size],
+      };
+      let history = {
+        cells: [...state.history.cells, state.cells],
+        size: [...state.history.size],
+      };
+      let cells = future.cells.pop();
 
       return { ...state, cells, history, future };
     }
