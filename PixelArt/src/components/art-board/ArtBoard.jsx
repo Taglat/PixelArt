@@ -9,50 +9,44 @@ import { Cell } from "./ui/Cell";
 import { ToolsIcons } from "./constants";
 import { Tool } from "./ui/Tool";
 import { StoryButtons } from "./ui/StoryButtons";
+import { SizeInputs } from "./ui/SizeInputs";
 
 export function ArtBoard() {
   const [artBoardState, dispatch] = useReducer(
     artBoardReducer,
     {
-      size: 25,
+      size: {
+        width: 25,
+        height: 25,
+      },
     },
     initArtBoardState,
   );
 
   const { cells, size } = artBoardState;
-  console.log(cells);
-  console.log(size);
-  console.log(artBoardState.tool);
   const gridStyle = {
     display: "grid",
-    gridTemplateColumns: `repeat(${size}, 1fr)`,
-    gridTemplateRows: `repeat(${size}, 1fr)`,
+    gridTemplateColumns: `repeat(${size.width}, 1fr)`,
+    gridTemplateRows: `repeat(${size.height}, 1fr)`,
   };
 
   return (
     <ArtBoardLayout
-      topbar={
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-betweenn",
-            alignItems: "center",
-          }}
-        >
-          <StoryButtons
-            prevHistory={() =>
-              dispatch({
-                type: ART_BOARD_STATE_ACTIONS.UNDO,
-              })
-            }
-            nextHistory={() =>
-              dispatch({
-                type: ART_BOARD_STATE_ACTIONS.REDO,
-              })
-            }
-          />
-        </div>
+      storyButtons={
+        <StoryButtons
+          prevHistory={() =>
+            dispatch({
+              type: ART_BOARD_STATE_ACTIONS.UNDO,
+            })
+          }
+          nextHistory={() =>
+            dispatch({
+              type: ART_BOARD_STATE_ACTIONS.REDO,
+            })
+          }
+        />
       }
+      sizeInputs={<SizeInputs width={size.width} height={size.height} />}
       grid={
         <div style={gridStyle}>
           {cells.map((cell, index) => (
@@ -84,7 +78,7 @@ export function ArtBoard() {
                 tool: tool.name,
               });
             }}
-            selected={artBoardState.tool == tool.name }
+            selected={artBoardState.tool == tool.name}
           />
         );
       })}

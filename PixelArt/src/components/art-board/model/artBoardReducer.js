@@ -8,8 +8,11 @@ export const ART_BOARD_STATE_ACTIONS = {
 export const initArtBoardState = ({ size }) => ({
   tool: "pen",
   color: "#000",
-  size: size,
-  cells: new Array(size * size).fill(null),
+  size: {
+    width: size.width,
+    height: size.height,
+  },
+  cells: new Array(size.width * size.height).fill(null),
   history: [],
   future: [],
 });
