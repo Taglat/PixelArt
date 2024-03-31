@@ -23,12 +23,7 @@ export function ArtBoard() {
     initArtBoardState,
   );
 
-  const { cells, size } = artBoardState;
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: `repeat(${size.width}, 1fr)`,
-    gridTemplateRows: `repeat(${size.height}, 1fr)`,
-  };
+  console.log("size, story", artBoardState.size, artBoardState.history);
 
   return (
     <ArtBoardLayout
@@ -46,25 +41,32 @@ export function ArtBoard() {
           }
         />
       }
-      sizeInputs={<SizeInputs width={size.width} height={size.height} />}
-      grid={
-        <div style={gridStyle}>
-          {cells.map((cell, index) => (
-            <Cell
-              color={cell}
-              key={index}
-              isOdd={index % 2}
-              onClick={() => {
-                dispatch({
-                  type: ART_BOARD_STATE_ACTIONS.CELL_CLICK,
-                  index,
-                });
-                console.log(cell, index);
-              }}
-            />
-          ))}
-        </div>
+      sizeInputs={
+        <SizeInputs
+          width={artBoardState.size.width}
+          height={artBoardState.size.height}
+          onClick={(width, height) => {
+            dispatch({
+              type: ART_BOARD_STATE_ACTIONS.SIZE_CHANGE,
+              width: width,
+              height: height,
+            });
+          }}
+        />
       }
+      grid={artBoardState.cells.map((cell, index) => (
+        <Cell
+          color={cell}
+          key={index}
+          isOdd={index % 2}
+          onClick={() => {
+            dispatch({
+              type: ART_BOARD_STATE_ACTIONS.CELL_CLICK,
+              index,
+            });
+          }}
+        />
+      ))}
       tools={ToolsIcons.map((tool, index) => {
         return (
           <Tool
@@ -72,7 +74,6 @@ export function ArtBoard() {
             iconSrc={tool.iconSrc}
             key={index}
             onClick={() => {
-              console.log(tool.name);
               dispatch({
                 type: ART_BOARD_STATE_ACTIONS.TOOL_CHANGE,
                 tool: tool.name,
@@ -82,6 +83,7 @@ export function ArtBoard() {
           />
         );
       })}
+      size={artBoardState.size}
     />
   );
 }

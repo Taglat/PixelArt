@@ -17,4 +17,11 @@
 
 .body {
   display: flex;
+  justify-content: space-between;
+}
+
+.tools {
+  display: flex;
+  max-width: 100px;
+  width: 100%;
 }
