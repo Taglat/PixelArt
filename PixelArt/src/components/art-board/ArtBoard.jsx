@@ -54,19 +54,25 @@ export function ArtBoard() {
           }}
         />
       }
-      grid={artBoardState.cells.map((cell, index) => (
-        <Cell
-          color={cell}
-          key={index}
-          isOdd={index % 2}
-          onClick={() => {
-            dispatch({
-              type: ART_BOARD_STATE_ACTIONS.CELL_CLICK,
-              index,
-            });
-          }}
-        />
-      ))}
+      grid={artBoardState.cells.map((cell, index) => {
+        const x = index % artBoardState.size.width;
+        const y = Math.floor(index / artBoardState.size.width);
+        const isOdd = (x + y) % 2;
+
+        return (
+          <Cell
+            color={cell}
+            key={index}
+            isOdd={isOdd}
+            onClick={() => {
+              dispatch({
+                type: ART_BOARD_STATE_ACTIONS.CELL_CLICK,
+                index,
+              });
+            }}
+          />
+        );
+      })}
       tools={ToolsIcons.map((tool, index) => {
         return (
           <Tool
