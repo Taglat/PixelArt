@@ -4,6 +4,7 @@ export const ART_BOARD_STATE_ACTIONS = {
   UNDO: "undo",
   REDO: "redo",
   SIZE_CHANGE: "size-change",
+  RESET: "reset",
 };
 
 export const initArtBoardState = ({ size }) => ({
@@ -106,6 +107,17 @@ export const artBoardReducer = (state, action) => {
 
         future: [],
       };
+    }
+    case ART_BOARD_STATE_ACTIONS.RESET: {
+      return {
+        ...state,
+        cells: new Array(state.size.width * state.size.height).fill(null),
+        history: [
+          ...state.history,
+          state.cells,
+        ],
+        future: [],
+      }
     }
     default: {
       return state;

@@ -54,6 +54,13 @@ export function ArtBoard() {
           }}
         />
       }
+      reset={
+        <button className="btn center" onClick={() => {
+          dispatch({
+            type: ART_BOARD_STATE_ACTIONS.RESET,
+          })
+        }}>Reset</button>
+      }
       grid={artBoardState.cells.map((cell, index) => {
         const x = index % artBoardState.size.width;
         const y = Math.floor(index / artBoardState.size.width);

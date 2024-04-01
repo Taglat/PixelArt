@@ -46,7 +46,7 @@ export function SizeInputs({ width, height, onClick }) {
           onChange={handleHeightChange}
         />
       </div>
-      <button onClick={() => onClick(size.width, size.height)}>Change</button>
+      <button onClick={() => onClick(size.width, size.height)} className="btn">Change</button>
     </div>
   );
 }

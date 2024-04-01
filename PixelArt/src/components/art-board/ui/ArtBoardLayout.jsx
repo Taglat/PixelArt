@@ -6,6 +6,7 @@ export function ArtBoardLayout({
   storyButtons,
   sizeInputs,
   size,
+  reset
 }) {
   const gridStyle = {
     display: "grid",
@@ -16,7 +17,8 @@ export function ArtBoardLayout({
   return (
     <div className={cl.container}>
       <div className={cl.topbar}>
-        {storyButtons} {sizeInputs}
+        {storyButtons} {sizeInputs} 
+        {reset}
       </div>
       <div className={cl.body}>
         <div style={gridStyle}>{grid}</div>
