@@ -23,7 +23,7 @@ export function ArtBoard() {
     initArtBoardState,
   );
 
-  console.log("size, story", artBoardState.size, artBoardState.history);
+  console.log(artBoardState);
 
   return (
     <ArtBoardLayout

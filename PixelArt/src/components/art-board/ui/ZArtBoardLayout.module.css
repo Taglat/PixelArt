@@ -24,4 +24,5 @@
   display: flex;
   max-width: 100px;
   width: 100%;
+  flex-wrap: wrap;
 }
