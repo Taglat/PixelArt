@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import {
   artBoardReducer,
   initArtBoardState,
@@ -22,6 +22,20 @@ export function ArtBoard() {
     },
     initArtBoardState,
   );
+
+  const [color, setColor] = useState(artBoardState.color);
+  useEffect(() => {
+    setColor(artBoardState.color);
+  });
+
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+
+    dispatch({
+      type: ART_BOARD_STATE_ACTIONS.COLOR_CHANGE,
+      color: event.target.value,
+    });
+  };
 
   console.log(artBoardState);
 
@@ -55,11 +69,16 @@ export function ArtBoard() {
         />
       }
       reset={
-        <button className="btn center" onClick={() => {
-          dispatch({
-            type: ART_BOARD_STATE_ACTIONS.RESET,
-          })
-        }}>Reset</button>
+        <button
+          className="btn center"
+          onClick={() => {
+            dispatch({
+              type: ART_BOARD_STATE_ACTIONS.RESET,
+            });
+          }}
+        >
+          Reset
+        </button>
       }
       grid={artBoardState.cells.map((cell, index) => {
         const x = index % artBoardState.size.width;
@@ -81,22 +100,27 @@ export function ArtBoard() {
           />
         );
       })}
-      tools={ToolsIcons.map((tool, index) => {
-        return (
-          <Tool
-            title={tool.name}
-            iconSrc={tool.iconSrc}
-            key={index}
-            onClick={() => {
-              dispatch({
-                type: ART_BOARD_STATE_ACTIONS.TOOL_CHANGE,
-                tool: tool.name,
-              });
-            }}
-            selected={artBoardState.tool == tool.name}
-          />
-        );
-      })}
+      tools={
+        <>
+          <input type="color" className="color" value={color} onChange={handleColorChange} />'
+          {ToolsIcons.map((tool, index) => {
+            return (
+              <Tool
+                title={tool.name}
+                iconSrc={tool.iconSrc}
+                key={index}
+                onClick={() => {
+                  dispatch({
+                    type: ART_BOARD_STATE_ACTIONS.TOOL_CHANGE,
+                    tool: tool.name,
+                  });
+                }}
+                selected={artBoardState.tool == tool.name}
+              />
+            );
+          })}
+        </>
+      }
       size={artBoardState.size}
     />
   );

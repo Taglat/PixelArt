@@ -5,6 +5,7 @@ export const ART_BOARD_STATE_ACTIONS = {
   REDO: "redo",
   SIZE_CHANGE: "size-change",
   RESET: "reset",
+  COLOR_CHANGE: "color-change",
 };
 
 export const ART_BOARD_STATE_TOOLS = {
@@ -171,6 +172,12 @@ export const artBoardReducer = (state, action) => {
         history: [...state.history, state.cells],
         future: [],
         startCellIndex: null,
+      };
+    }
+    case ART_BOARD_STATE_ACTIONS.COLOR_CHANGE: {
+      return {
+        ...state,
+        color: action.color,
       };
     }
     default: {

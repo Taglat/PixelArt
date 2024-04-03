@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import cl from "./ZArtBoardLayout.module.css";
 
 export function ArtBoardLayout({
@@ -13,8 +14,9 @@ export function ArtBoardLayout({
     gridTemplateColumns: `repeat(${size.width}, 1fr)`,
     gridTemplateRows: `repeat(${size.height}, 1fr)`,
     margin: "0 auto",
-
   };
+
+  const isLowHeight = size.height < 8 ? true : false;
 
   return (
     <div className={cl.container}>
@@ -24,7 +26,7 @@ export function ArtBoardLayout({
       </div>
       <div className={cl.body}>
         <div style={gridStyle}>{grid}</div>
-        <div className={cl.tools}>{tools}</div>
+        <div className={clsx(isLowHeight && cl.lowHeight)} >{tools}</div>
       </div>
     </div>
   );
