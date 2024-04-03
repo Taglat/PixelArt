@@ -29,11 +29,33 @@ export const initArtBoardState = ({ size }) => ({
 export const artBoardReducer = (state, action) => {
   switch (action.type) {
     case ART_BOARD_STATE_ACTIONS.CELL_CLICK: {
-      if (
-        state.tool === ART_BOARD_STATE_TOOLS.LINE &&
-        state.startCellIndex === null
-      ) {
-        return { ...state, startCellIndex: action.index };
+      if (state.tool === ART_BOARD_STATE_TOOLS.LINE) {
+        if (state.startCellIndex === null) {
+          return { ...state, startCellIndex: action.index };
+        } else {
+          let startX = state.startCellIndex % state.size.width;
+          let startY = Math.floor(state.startCellIndex / state.size.width);
+          let endX = action.index % state.size.width;
+          let endY = Math.floor(action.index / state.size.width);
+
+          let newCells = drawLine(
+            [...state.cells],
+            state.size.width,
+            state.color,
+            startX,
+            startY,
+            endX,
+            endY,
+          );
+
+          return {
+            ...state,
+            cells: newCells,
+            startCellIndex: null,
+            history: [...state.history, state.cells],
+            future: [],
+          };
+        }
       } else {
         if (
           state.cells[action.index] &&
@@ -56,7 +78,6 @@ export const artBoardReducer = (state, action) => {
           ...newState,
           history: [...state.history, state.cells],
           future: [],
-          startCellIndex: null,
         };
       }
     }
@@ -81,14 +102,28 @@ export const artBoardReducer = (state, action) => {
         size = history.pop();
         if (!history[history.length - 1].width) {
           let cells = history.pop();
-          return { ...state, size, cells, history, future, startCellIndex: null };
+          return {
+            ...state,
+            size,
+            cells,
+            history,
+            future,
+            startCellIndex: null,
+          };
         }
         return { ...state, size, cells: state.cells, history, future };
       } else {
         console.log("cells UNDO");
         cells = history.pop();
         console.log(state.size);
-        return { ...state, cells, size: state.size, history, future, startCellIndex: null };
+        return {
+          ...state,
+          cells,
+          size: state.size,
+          history,
+          future,
+          startCellIndex: null,
+        };
       }
     }
     case ART_BOARD_STATE_ACTIONS.REDO: {
@@ -155,7 +190,9 @@ function updateCell(artBoardState, index) {
     const cells = [...artBoardState.cells];
 
     let startX = artBoardState.startCellIndex % artBoardState.size.width;
-    let startY = Math.floor(artBoardState.startCellIndex / artBoardState.size.width);
+    let startY = Math.floor(
+      artBoardState.startCellIndex / artBoardState.size.width,
+    );
     let endX = index % artBoardState.size.width;
     let endY = Math.floor(index / artBoardState.size.width);
 
@@ -171,4 +208,29 @@ function updateCell(artBoardState, index) {
 
     return cells;
   }
+}
+
+function drawLine(cells, width, color, x1, y1, x2, y2) {
+  let dx = Math.abs(x2 - x1);
+  let dy = Math.abs(y2 - y1);
+  let sx = x1 < x2 ? 1 : -1;
+  let sy = y1 < y2 ? 1 : -1;
+  let err = dx - dy;
+
+  while (true) {
+    cells[y1 * width + x1] = color; // set color
+
+    if (x1 === x2 && y1 === y2) break;
+    let e2 = 2 * err;
+    if (e2 > -dy) {
+      err -= dy;
+      x1 += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      y1 += sy;
+    }
+  }
+
+  return cells;
 }

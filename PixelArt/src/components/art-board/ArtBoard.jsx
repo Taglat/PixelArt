@@ -71,6 +71,7 @@ export function ArtBoard() {
             color={cell}
             key={index}
             isOdd={isOdd}
+            firstClick={index === artBoardState.startCellIndex && true}
             onClick={() => {
               dispatch({
                 type: ART_BOARD_STATE_ACTIONS.CELL_CLICK,

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import cl from "./ZCell.module.css";
 
 const getColor = (color, isOdd) => {
@@ -8,10 +9,10 @@ const getColor = (color, isOdd) => {
   }
 };
 
-export const Cell = ({ color, isOdd, onClick }) => {
+export const Cell = ({ color, isOdd, onClick, firstClick }) => {
   return (
     <div
-      className={cl.cell}
+      className={clsx(cl.cell, firstClick && cl.firstClick)}
       style={{ background: getColor(color, isOdd) }}
       onClick={() => onClick()}
     />

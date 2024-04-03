@@ -12,6 +12,8 @@ export function ArtBoardLayout({
     display: "grid",
     gridTemplateColumns: `repeat(${size.width}, 1fr)`,
     gridTemplateRows: `repeat(${size.height}, 1fr)`,
+    margin: "0 auto",
+
   };
 
   return (
